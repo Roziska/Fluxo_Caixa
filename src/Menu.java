@@ -11,6 +11,7 @@ public class Menu {
         System.out.println("2 - DFC Descontado");
         System.out.println("3 - DFC Direto");
         System.out.println("4 - DFC Indireto");
+        System.out.println("5 - Sair");
 
         var escolha = scanner.nextInt();
 
@@ -24,7 +25,12 @@ public class Menu {
             case 3:
                 DFC_direto.getInstance().menuDFCDireto();
                 break;
-            default:
+            case 4:
+                DFC_indireto.getInstance().menuDFCIndireto();
+                break;
+            case 5:
+                System.out.println("Você acabou de usar o melhor sistema de DFC da Fatec Assis ©®");
+                System.exit(0);
         }
     }
 }
