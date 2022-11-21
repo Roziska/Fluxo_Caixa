@@ -24,7 +24,7 @@ public class DFC_descontado {
     }
 
     public void calcularDFCDescontado(){
-        Double total = 0.0;
+        double total = 0.0;
         System.out.println("DFC Descontado por Ano: ");
         for(int i = 0; i< qtdAnos; i++) {
             valorTotalAno.add(valorPrevistoAno.get(i) - (valorPrevistoAno.get(i)*(taxas.get(i)/100)));
@@ -35,7 +35,7 @@ public class DFC_descontado {
     }
 
     public void dfcDescontado(){
-        int escolha = 0;
+        int escolha;
         do {
             System.out.println("Menu");
             System.out.println("1 - Adicionar Anos e Valores");

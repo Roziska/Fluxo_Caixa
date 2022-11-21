@@ -9,6 +9,7 @@ public class Menu {
         System.out.println("--------- Menu Principal ------------");
         System.out.println("1 - DFC Simples");
         System.out.println("2 - DFC Descontado");
+        System.out.println("3 - DFC Direto");
 
         var escolha = scanner.nextInt();
 
@@ -19,8 +20,10 @@ public class Menu {
             case 2:
                 dfcDescontado.dfcDescontado();
                 break;
+            case 3:
+                DFC_direto.getInstance().menuDFCDireto();
+                break;
             default:
-                return;
         }
     }
 }
