@@ -76,15 +76,18 @@ public class DFC_direto {
     }
 
     private void showOpeningCashBalance() {
+        System.out.println("Saldo Inicial de Caixa: ");
+        System.out.println(openingCashBalance);
     }
 
     private void showPayments() {
-
+        System.out.println("Pagamentos: ");
+        payments.forEach(payment -> System.out.println(payment.descricao + " : " + payment.valor));
     }
 
     private void showReceipts() {
         System.out.println("Recebimentos: ");
-        receipts.forEach(r -> System.out.println(r.descricao + " : " + r.valor));
+        receipts.forEach(receipt -> System.out.println(receipt.descricao + " : " + receipt.valor));
     }
 
     private void finalCashBalance() {

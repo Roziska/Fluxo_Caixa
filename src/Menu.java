@@ -10,6 +10,7 @@ public class Menu {
         System.out.println("1 - DFC Simples");
         System.out.println("2 - DFC Descontado");
         System.out.println("3 - DFC Direto");
+        System.out.println("4 - DFC Indireto");
 
         var escolha = scanner.nextInt();
 
