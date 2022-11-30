@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -51,9 +52,9 @@ public class DFC_simples {
         System.out.println("DFC Simples: ");
         System.out.println(somaEntradas-somaSaidas);
     }
-    public void calcularDfcSimples(){
+    public void calcularDfcSimples() throws IOException {
         Scanner scanner = new Scanner(System.in);
-        int escolha = 0;
+        int escolha;
         do {
             System.out.println("Menu");
             System.out.println("1 - Adicionar Entrada");

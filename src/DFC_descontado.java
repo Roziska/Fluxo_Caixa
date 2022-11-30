@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -34,7 +35,7 @@ public class DFC_descontado {
         System.out.println("DFC Descontado Total: " + total);
     }
 
-    public void dfcDescontado(){
+    public void dfcDescontado() throws IOException {
         int escolha;
         do {
             System.out.println("Menu");

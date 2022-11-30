@@ -1,9 +1,15 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
 
 public class DFC_direto {
 
+    public static final String SUB_MENU = "-------- SubMenu ---------";
+    public static final String LINE_BREAK = "\n";
+    public static final String SEPARATOR = " - ";
     private static DFC_direto instance;
     private DFC_direto() {
         try {
@@ -18,110 +24,123 @@ public class DFC_direto {
         }
         return instance;
     }
+    OperationalFlow operationalFlow = new OperationalFlow();
+    List<ParametrosDTO> parameterList = new ArrayList<>();
+    BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
-    List<ParametrosDTO> receipts = new ArrayList<>();
-    List<ParametrosDTO> payments = new ArrayList<>();
-    double sumReceipts = 0.0;
-    double sumPayments = 0.0;
-    double openingCashBalance = 0.0;
-    Scanner scanner = new Scanner(System.in);
-
-    public void menuDFCDireto() {
+    public void menuDFCDireto() throws IOException {
         int setMenu;
         do {
-            System.out.println("--------- Menu ------------");
-            System.out.println("1 - Adicionar Saldo Inicial de Caixa");
-            System.out.println("2 - Adicionar Recebimentos");
-            System.out.println("3 - Adicionar Pagamentos");
-            System.out.println("4 - Saldo Operacional de Caixa");
-            System.out.println("5 - Calcular DFC Direto");
-            System.out.println("6 - Exibir Recebimentos");
-            System.out.println("7 - Exibir Pagamentos");
-            System.out.println("8 - Exibir Saldo de Caixa");
-            System.out.println("9 - Sair");
-            setMenu = scanner.nextInt();
+            System.out.println(createInitText());
+            setMenu = Integer.parseInt(reader.readLine());
 
-            switch (setMenu) {
-                case 1:
-                    addOpeningCashBalance();
-                    break;
-                case 2:
-                    addReceipts();
-                    break;
-                case 3:
-                    addPayments();
-                    break;
-                case 4:
-                    cashOperatingBalance();
-                    break;
-                case 5:
-                    finalCashBalance();
-                    break;
-                case 6:
-                    showReceipts();
-                    break;
-                case 7:
-                    showPayments();
-                    break;
-                case 8:
-                    showOpeningCashBalance();
-                    break;
-                case 9:
-                    new Menu().menu();
-                    break;
-
-            }
+            int finalSetMenu = setMenu;
+            Arrays.stream(DFCDiretoEnum.values())
+                    .filter(direto -> direto.getValue() == finalSetMenu)
+                    .findFirst()
+                    .ifPresent(this::action);
 
         } while (setMenu != 9);
     }
 
-    private void showOpeningCashBalance() {
-        System.out.println("Saldo Inicial de Caixa: ");
-        System.out.println(openingCashBalance);
+    private void action(DFCDiretoEnum dfc) {
+        try {
+            dfc.action(reader, createOperationalFlowText(),
+                    createParameterText(), operationalFlow, parameterList);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    private void showPayments() {
-        System.out.println("Pagamentos: ");
-        payments.forEach(payment -> System.out.println(payment.descricao + " : " + payment.valor));
+    private String createInitText() {
+        return "--------- Menu ------------" +
+                LINE_BREAK +
+                DFCDiretoEnum.OPERATIONAL_FLOW.getValue() +
+                SEPARATOR +
+                DFCDiretoEnum.OPERATIONAL_FLOW.getDescription() +
+                LINE_BREAK +
+                DFCDiretoEnum.FINANCING_FLOW.getValue() +
+                SEPARATOR +
+                DFCDiretoEnum.FINANCING_FLOW.getDescription() +
+                LINE_BREAK +
+                DFCDiretoEnum.INVESTIMENT_FLOW.getValue() +
+                SEPARATOR +
+                DFCDiretoEnum.INVESTIMENT_FLOW.getDescription() +
+                LINE_BREAK +
+                DFCDiretoEnum.SHOW_OPERATIONAL_FLOW.getValue() +
+                SEPARATOR +
+                DFCDiretoEnum.SHOW_OPERATIONAL_FLOW.getDescription() +
+                LINE_BREAK +
+                DFCDiretoEnum.SHOW_FINANCING_FLOW.getValue() +
+                SEPARATOR +
+                DFCDiretoEnum.SHOW_FINANCING_FLOW.getDescription() +
+                LINE_BREAK +
+                DFCDiretoEnum.SHOW_INVESTIMENT_FLOW.getValue() +
+                SEPARATOR +
+                DFCDiretoEnum.SHOW_INVESTIMENT_FLOW.getDescription() +
+                LINE_BREAK +
+                DFCDiretoEnum.CALCULATE_DIRECT_DFC.getValue() +
+                SEPARATOR +
+                DFCDiretoEnum.CALCULATE_DIRECT_DFC.getDescription() +
+                LINE_BREAK +
+                DFCDiretoEnum.EXIT.getValue() +
+                SEPARATOR +
+                DFCDiretoEnum.EXIT.getDescription() +
+                LINE_BREAK;
     }
 
-    private void showReceipts() {
-        System.out.println("Recebimentos: ");
-        receipts.forEach(receipt -> System.out.println(receipt.descricao + " : " + receipt.valor));
+    private String createParameterText() {
+        return SUB_MENU +
+                LINE_BREAK +
+                ParametersEnum.ADD_DESCRIPTION.getValue() +
+                SEPARATOR +
+                ParametersEnum.ADD_DESCRIPTION.getDescription() +
+                LINE_BREAK +
+                ParametersEnum.ADD_VALUE.getValue() +
+                SEPARATOR +
+                ParametersEnum.ADD_VALUE.getDescription() +
+                LINE_BREAK +
+                ParametersEnum.EXIT.getValue() +
+                SEPARATOR +
+                ParametersEnum.EXIT.getDescription() +
+                LINE_BREAK;
     }
 
-    private void finalCashBalance() {
-        System.out.println("DFC Direto: ");
-        System.out.println(openingCashBalance+sumReceipts-sumPayments);
-
-    }
-
-    private void cashOperatingBalance() {
-        System.out.println("Saldo Operacional de Caixa: ");
-        System.out.println(sumReceipts-sumPayments);
-    }
-
-    private void addPayments() {
-        System.out.println("Descrição do Pagamento: ");
-        var description = scanner.next();
-        System.out.println("Valor: ");
-        var payment = scanner.nextDouble();
-        sumPayments = sumPayments + payment;
-        payments.add(new ParametrosDTO(description, payment));
-    }
-
-    private void addReceipts() {
-        System.out.println("Descrição do Recebimento: ");
-        var description = scanner.next();
-        System.out.println("Valor: ");
-        var receipt = scanner.nextDouble();
-        sumReceipts = sumReceipts + receipt;
-        receipts.add(new ParametrosDTO(description, receipt));
-    }
-
-    private void addOpeningCashBalance() {
-        System.out.println("Valor do Saldo Inicial de Caixa: ");
-        openingCashBalance = scanner.nextDouble();
+    private String createOperationalFlowText() {
+        return SUB_MENU +
+                LINE_BREAK +
+                OperationalFlowEnum.CUSTOMER_RECEIPT.getValue() +
+                SEPARATOR +
+                OperationalFlowEnum.CUSTOMER_RECEIPT.getDescription() +
+                LINE_BREAK +
+                OperationalFlowEnum.SUPPLIER_PAYMENT.getValue() +
+                SEPARATOR +
+                OperationalFlowEnum.SUPPLIER_PAYMENT.getDescription() +
+                LINE_BREAK +
+                OperationalFlowEnum.ADMINISTRATIVE_EXPENSE.getValue() +
+                SEPARATOR +
+                OperationalFlowEnum.ADMINISTRATIVE_EXPENSE.getDescription() +
+                LINE_BREAK +
+                OperationalFlowEnum.SELLING_EXPENSE.getValue() +
+                SEPARATOR +
+                OperationalFlowEnum.SELLING_EXPENSE.getDescription() +
+                LINE_BREAK +
+                OperationalFlowEnum.EMPLOYEE_EXPENSE.getValue() +
+                SEPARATOR +
+                OperationalFlowEnum.EMPLOYEE_EXPENSE.getDescription() +
+                LINE_BREAK +
+                OperationalFlowEnum.FINANCING_EXPENSE.getValue() +
+                SEPARATOR +
+                OperationalFlowEnum.FINANCING_EXPENSE.getDescription() +
+                LINE_BREAK +
+                OperationalFlowEnum.OTHER_EXPENSE.getValue() +
+                SEPARATOR +
+                OperationalFlowEnum.OTHER_EXPENSE.getDescription() +
+                LINE_BREAK +
+                OperationalFlowEnum.EXIT.getValue() +
+                SEPARATOR +
+                OperationalFlowEnum.EXIT.getDescription() +
+                LINE_BREAK;
     }
 
 

@@ -1,7 +1,8 @@
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Menu {
-    public void menu(){
+    public void menu() throws IOException {
         DFC_simples dfcSimples = new DFC_simples();
         DFC_descontado dfcDescontado = new DFC_descontado();
 

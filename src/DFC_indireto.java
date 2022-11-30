@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -33,7 +34,7 @@ public class DFC_indireto {
 
     Scanner scanner = new Scanner(System.in);
 
-    public void menuDFCIndireto() {
+    public void menuDFCIndireto() throws IOException {
         int setMenu;
         do {
             System.out.println("--------- Menu ------------");
