@@ -26,4 +26,13 @@ public class Utils {
         }
     }
 
+    public static String convertStringToDouble(String value) {
+        return value.replace(',', '.');
+    }
+
+    public static String convertDoubleToString(double value) {
+        String convert = String.valueOf(value);
+        return convert.replace('.', ',');
+    }
+
 }

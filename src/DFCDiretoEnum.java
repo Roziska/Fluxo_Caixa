@@ -5,7 +5,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public enum DFCDiretoEnum {
 
-    OPERATIONAL_FLOW(1, "Adicionar Fluxo Operational") {
+    OPERATIONAL_FLOW(1, "Adicionar Fluxo Operacional") {
         @Override
         public void action(BufferedReader scanner, String textFlow, String textParameter, OperationalFlow operationalFlow, List<ParametrosDTO> parameterList) throws IOException {
             int item;
@@ -86,15 +86,15 @@ public enum DFCDiretoEnum {
     };
 
     private static void showOperationalFlow(OperationalFlow operationalFlow) {
-        System.out.println("FLUXO OPERACIONAL: " + operationalFlow.getTotalOperationFlow());
-        System.out.println("(+) Recebimento de Clientes: " + operationalFlow.getCustomerReceipt());
-        System.out.println("(-) Pagamento de Forncedores: " + operationalFlow.getSupplierPayment());
-        System.out.println("(-) Despesas Administrativas: " + operationalFlow.getAdministrativeExpense());
-        System.out.println("(-) Despesas de Venda: " + operationalFlow.getSellingExpense());
-        System.out.println("(-) Despesas de Pessoal: " + operationalFlow.getEmployeeExpense());
-        System.out.println("(-) Despesas de Financiamento: " + operationalFlow.getFinancingExpense());
+        System.out.println("FLUXO OPERACIONAL: " + Utils.convertDoubleToString(operationalFlow.getTotalOperationFlow()));
+        System.out.println("(+) Recebimento de Clientes: " + Utils.convertDoubleToString(operationalFlow.getCustomerReceipt()));
+        System.out.println("(-) Pagamento de Forncedores: " + Utils.convertDoubleToString(operationalFlow.getSupplierPayment()));
+        System.out.println("(-) Despesas Administrativas: " + Utils.convertDoubleToString(operationalFlow.getAdministrativeExpense()));
+        System.out.println("(-) Despesas de Venda: " + Utils.convertDoubleToString(operationalFlow.getSellingExpense()));
+        System.out.println("(-) Despesas de Pessoal: " + Utils.convertDoubleToString(operationalFlow.getEmployeeExpense()));
+        System.out.println("(-) Despesas de Financiamento: " + Utils.convertDoubleToString(operationalFlow.getFinancingExpense()));
         if (operationalFlow.getOtherExpense() > 0.0)
-            System.out.println(("(-) Outras Despesas: " + operationalFlow.getOtherExpense()));
+            System.out.println(("(-) Outras Despesas: " + Utils.convertDoubleToString(operationalFlow.getOtherExpense())));
         System.out.println("\n");
     }
 
@@ -107,7 +107,7 @@ public enum DFCDiretoEnum {
     }
 
     private static void showFinancingFlow(double financing) {
-        System.out.println("FLUXO FINANCIMANTO: " + financing + "\n");
+        System.out.println("FLUXO FINANCIMANTO: " + Utils.convertDoubleToString(financing) + "\n");
     }
 
     private static AtomicReference<Double> calculateFlow(List<ParametrosDTO> parameterList, DFCDiretoEnum flow) {
@@ -119,7 +119,7 @@ public enum DFCDiretoEnum {
     }
 
     private static void showInvestimentFlow(double investiment) {
-        System.out.println("FLUXO INVESTIMENTO: " + investiment + "\n");
+        System.out.println("FLUXO INVESTIMENTO: " + Utils.convertDoubleToString(investiment) + "\n");
     }
 
     public static final Map<DFCDiretoEnum, String> DFC_DIRETO_ENUM_MAP = new EnumMap<>(DFCDiretoEnum.class);

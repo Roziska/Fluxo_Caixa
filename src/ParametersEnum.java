@@ -18,8 +18,7 @@ public enum ParametersEnum {
         @Override
         public void addParameter(ParametrosDTO parameter, BufferedReader reader) throws IOException {
             System.out.print("Valor: ");
-            System.out.flush();
-            var value = reader.readLine();
+            var value = Utils.convertStringToDouble(reader.readLine());
             parameter.setValor(Double.valueOf(value));
         }
     },
