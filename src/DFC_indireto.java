@@ -1,7 +1,8 @@
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class DFC_indireto {
 
@@ -26,13 +27,12 @@ public class DFC_indireto {
     double sumFinancingFlow = 0.00;
     double sumInvestimentFlow = 0.00;
     double profitOrLoss = 0.00;
-
     List<ParametrosDTO> operationalFlowList = new ArrayList<>();
     List<ParametrosDTO> financingFlowList = new ArrayList<>();
     List<ParametrosDTO> investimentFlowList = new ArrayList<>();
 
 
-    Scanner scanner = new Scanner(System.in);
+    BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
     public void menuDFCIndireto() throws IOException {
         int setMenu;
@@ -48,7 +48,7 @@ public class DFC_indireto {
             System.out.println("8 - Exibir Total Fluxo Investimento");
             System.out.println("9 - Exibir Total Lucro/Prejuízo");
             System.out.println("0 - Sair");
-            setMenu = scanner.nextInt();
+            setMenu = Integer.parseInt(reader.readLine());
 
             switch (setMenu) {
                 case 1:
@@ -89,62 +89,56 @@ public class DFC_indireto {
 
     private void finalCashBalance() {
         System.out.println("DFC Indireto: ");
-        System.out.println(sumOperationalFlow+sumFinancingFlow+sumInvestimentFlow+profitOrLoss);
+        System.out.println(Utils.convertDoubleToString(sumOperationalFlow+sumFinancingFlow+sumInvestimentFlow+profitOrLoss));
     }
 
     private void showProfitOrLoss() {
         System.out.println("Total Lucro/Prejuízo: ");
-        System.out.println(profitOrLoss);
+        System.out.println(Utils.convertDoubleToString(profitOrLoss));
     }
 
     private void showInvestimentFlow() {
         System.out.println("Total Fluxo Investimento: ");
-        investimentFlowList.forEach(item -> System.out.println(item.descricao + " : " + item.valor));
-        System.out.println("Total: " + sumInvestimentFlow);
+        investimentFlowList.forEach(item -> System.out.println(item.descricao + " : " + Utils.convertDoubleToString(item.valor)));
+        System.out.println("Total: " + Utils.convertDoubleToString(sumInvestimentFlow));
     }
 
     private void showFinancingFlow() {
         System.out.println("Total Fluxo Financiamento: ");
-        financingFlowList.forEach(item -> System.out.println(item.descricao + " : " + item.valor));
-        System.out.println("Total :" + sumFinancingFlow);
+        financingFlowList.forEach(item -> System.out.println(item.descricao + " : " + Utils.convertDoubleToString(item.valor)));
+        System.out.println("Total :" + Utils.convertDoubleToString(sumFinancingFlow));
     }
 
     private void showOperationalFlow() {
         System.out.println("Total Fluxo Operacional: ");
         operationalFlowList.forEach(item -> System.out.println(item.descricao + " : " + item.valor));
-        System.out.println("Total: " + sumOperationalFlow);
+        System.out.println("Total: " + Utils.convertDoubleToString(sumOperationalFlow));
     }
 
-    private void addProfitOrLoss() {
+    private void addProfitOrLoss() throws IOException {
         System.out.println("Valor: ");
-        profitOrLoss = scanner.nextDouble();
+        profitOrLoss = Double.parseDouble(Utils.convertStringToDouble(reader.readLine()));
     }
 
-    private void addInvestimentFlow() {
-        System.out.println("Descrição do Item: ");
-        var description = scanner.next();
-        System.out.println("Valor: ");
-        var item = scanner.nextDouble();
-        sumInvestimentFlow = sumInvestimentFlow + item;
-        investimentFlowList.add(new ParametrosDTO(description, item));
+    private void addInvestimentFlow() throws IOException {
+        ParametrosDTO parametrosDTO = new ParametrosDTO();
+        Utils.addParameter(parametrosDTO, reader);
+        sumInvestimentFlow = sumInvestimentFlow + parametrosDTO.getValor();
+        investimentFlowList.add(parametrosDTO);
     }
 
-    private void addFinancingFlow() {
-        System.out.println("Descrição do Item: ");
-        var description = scanner.next();
-        System.out.println("Valor: ");
-        var item = scanner.nextDouble();
-        sumFinancingFlow = sumFinancingFlow + item;
-        financingFlowList.add(new ParametrosDTO(description, item));
+    private void addFinancingFlow() throws IOException {
+        ParametrosDTO parametrosDTO = new ParametrosDTO();
+        Utils.addParameter(parametrosDTO, reader);
+        sumFinancingFlow = sumFinancingFlow + parametrosDTO.getValor();
+        financingFlowList.add(parametrosDTO);
     }
 
-    private void addOperationalFlow() {
-        System.out.println("Descrição do Item: ");
-        var description = scanner.next();
-        System.out.println("Valor: ");
-        var item = scanner.nextDouble();
-        sumOperationalFlow = sumOperationalFlow + item;
-        operationalFlowList.add(new ParametrosDTO(description, item));
+    private void addOperationalFlow() throws IOException {
+        ParametrosDTO parametrosDTO = new ParametrosDTO();
+        Utils.addParameter(parametrosDTO, reader);
+        sumOperationalFlow = sumOperationalFlow + parametrosDTO.getValor();
+        operationalFlowList.add(parametrosDTO);
     }
 
 }

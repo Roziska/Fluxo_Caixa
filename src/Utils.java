@@ -35,4 +35,11 @@ public class Utils {
         return convert.replace('.', ',');
     }
 
+
+    public static void addParameter(ParametrosDTO parametrosDTO, BufferedReader reader) throws IOException {
+        System.out.println("Descrição do Item: ");
+        parametrosDTO.setDescricao(reader.readLine());
+        System.out.println("Valor: ");
+        parametrosDTO.setValor(Double.parseDouble(Utils.convertStringToDouble(reader.readLine())));
+    }
 }

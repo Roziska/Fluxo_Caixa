@@ -1,59 +1,54 @@
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class DFC_simples {
     ArrayList<ParametrosDTO> entrada = new ArrayList<>();
     ArrayList<ParametrosDTO> saidas = new ArrayList<>();
-
+    BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     Double somaEntradas=0.0;
     Double somaSaidas=0.0;
 
-    public void calculaDFCSimplesEntrada(String descricao, Double valor){
-        ParametrosDTO par = new ParametrosDTO();
-        par.descricao = descricao;
-        par.valor = valor;
-
-        entrada.add(par);
-
-        somaEntradas = somaEntradas + valor;
+    public void calculaDFCSimplesEntrada() throws IOException {
+        ParametrosDTO parametrosDTO = new ParametrosDTO();
+        Utils.addParameter(parametrosDTO, reader);
+        entrada.add(parametrosDTO);
+        somaEntradas = somaEntradas + parametrosDTO.getValor();
     }
 
     public void mostrarEntradas(){
         System.out.println("Entradas: ");
-        entrada.forEach(e -> System.out.println(e.descricao + " = " + e.valor));
+        entrada.forEach(e -> System.out.println(e.descricao + " = " + Utils.convertDoubleToString(e.valor)));
     }
 
     public void mostrarTotalEntradas(){
-        System.out.println("Total Entradas: "+ somaEntradas);
+        System.out.println("Total Entradas: "+ Utils.convertDoubleToString(somaEntradas));
     }
 
-    public void calculaDFCSimplesSaida(String descricao, Double valor){
-        ParametrosDTO par = new ParametrosDTO();
-        par.descricao = descricao;
-        par.valor = valor;
-
-        saidas.add(par);
-
-        somaSaidas = somaSaidas + valor;
+    public void calculaDFCSimplesSaida() throws IOException {
+        ParametrosDTO parametrosDTO = new ParametrosDTO();
+        Utils.addParameter(parametrosDTO, reader);
+        saidas.add(parametrosDTO);
+        somaSaidas = somaSaidas + parametrosDTO.getValor();
     }
 
     public void mostrarSaidas(){
         System.out.println("Saidas: ");
 
-        saidas.forEach(e -> System.out.println(e.descricao + " = " + e.valor));
+        saidas.forEach(e -> System.out.println(e.descricao + " = " + Utils.convertDoubleToString(e.valor)));
     }
 
     public void mostrarTotalSaidas(){
-        System.out.println("Total Saidas: "+ somaSaidas);
+        System.out.println("Total Saidas: "+ Utils.convertDoubleToString(somaSaidas));
     }
 
     public void calcularDfc(){
         System.out.println("DFC Simples: ");
-        System.out.println(somaEntradas-somaSaidas);
+        System.out.println(Utils.convertDoubleToString(somaEntradas-somaSaidas));
     }
     public void calcularDfcSimples() throws IOException {
-        Scanner scanner = new Scanner(System.in);
+
         int escolha;
         do {
             System.out.println("Menu");
@@ -63,24 +58,14 @@ public class DFC_simples {
             System.out.println("4 - Mostrar Saidas");
             System.out.println("5 - Calcular DFC Simples");
             System.out.println("6 - Sair");
-            escolha = scanner.nextInt();
+            escolha = Integer.parseInt(reader.readLine());
 
             switch (escolha) {
                 case 1:
-                    System.out.println("1 - Adicionar Entrada");
-                    System.out.println("Descrição da Entrada: ");
-                    var descricao = scanner.next();
-                    System.out.println("Valor: ");
-                    var valor = scanner.nextDouble();
-                    calculaDFCSimplesEntrada(descricao, valor);
+                    calculaDFCSimplesEntrada();
                     break;
                 case 2:
-                    System.out.println("2 - Adicionar Saida");
-                    System.out.println("Descrição da Saida: ");
-                    descricao = scanner.next();
-                    System.out.println("Valor: ");
-                    valor = scanner.nextDouble();
-                    calculaDFCSimplesSaida(descricao, valor);
+                    calculaDFCSimplesSaida();
                     break;
                 case 3:
                     mostrarEntradas();
