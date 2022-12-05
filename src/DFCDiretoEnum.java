@@ -67,7 +67,7 @@ public enum DFCDiretoEnum {
     CALCULATE_DIRECT_DFC(7, "Calcular DFC direto") {
         @Override
         public void action(BufferedReader scanner, String textFlow, String textParameter, OperationalFlow operationalFlow, List<ParametrosDTO> parameterList) {
-            double operational = operationalFlow.getTotalOperationFlow();
+            double operational = Utils.calculateOperationalFlow(operationalFlow);
             double financing = DFCDiretoEnum.calculateFlow(parameterList, FINANCING_FLOW).get();
             double investiment = DFCDiretoEnum.calculateFlow(parameterList, INVESTIMENT_FLOW).get();
             double total = operational + financing + investiment;
@@ -86,7 +86,7 @@ public enum DFCDiretoEnum {
     };
 
     private static void showOperationalFlow(OperationalFlow operationalFlow) {
-        System.out.println("FLUXO OPERACIONAL: " + Utils.convertDoubleToString(operationalFlow.getTotalOperationFlow()));
+        System.out.println("FLUXO OPERACIONAL: " + Utils.convertDoubleToString(Utils.calculateOperationalFlow(operationalFlow)));
         System.out.println("(+) Recebimento de Clientes: " + Utils.convertDoubleToString(operationalFlow.getCustomerReceipt()));
         System.out.println("(-) Pagamento de Forncedores: " + Utils.convertDoubleToString(operationalFlow.getSupplierPayment()));
         System.out.println("(-) Despesas Administrativas: " + Utils.convertDoubleToString(operationalFlow.getAdministrativeExpense()));

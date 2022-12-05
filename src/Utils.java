@@ -42,4 +42,14 @@ public class Utils {
         System.out.println("Valor: ");
         parametrosDTO.setValor(Double.parseDouble(Utils.convertStringToDouble(reader.readLine())));
     }
+
+    public static Double calculateOperationalFlow(OperationalFlow operationalFlow) {
+        return operationalFlow.getCustomerReceipt() +
+                operationalFlow.getSupplierPayment() +
+                operationalFlow.getSellingExpense() +
+                operationalFlow.getAdministrativeExpense() +
+                operationalFlow.getFinancingExpense() +
+                operationalFlow.getOtherExpense() +
+                operationalFlow.getEmployeeExpense();
+    }
 }

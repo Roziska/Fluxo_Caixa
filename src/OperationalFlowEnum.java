@@ -65,8 +65,7 @@ public enum OperationalFlowEnum {
     EXIT (8, "Sair") {
         @Override
         public void addOperationalFlowDetail(ParametrosDTO parametrosDTO, OperationalFlow operationalFlow, BufferedReader scanner, String parameterText) throws IOException {
-            Menu menu = new Menu();
-            menu.menu();
+            DFC_direto.getInstance().menuDFCDireto();
         }
     };
 

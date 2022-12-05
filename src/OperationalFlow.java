@@ -8,8 +8,6 @@ public class OperationalFlow {
     private double financingExpense;
     private double otherExpense;
 
-    private double totalOperationFlow;
-
     public OperationalFlow() {
         this.customerReceipt = 0.0;
         this.supplierPayment = 0.0;
@@ -18,7 +16,6 @@ public class OperationalFlow {
         this.employeeExpense = 0.0;
         this.financingExpense = 0.0;
         this.otherExpense = 0.0;
-        this.totalOperationFlow = 0.0;
     }
 
     public double getCustomerReceipt() {
@@ -77,7 +74,4 @@ public class OperationalFlow {
         this.otherExpense = this.otherExpense + otherExpense;
     }
 
-    public double getTotalOperationFlow() {
-        return totalOperationFlow = totalOperationFlow + customerReceipt - supplierPayment - administrativeExpense - sellingExpense - employeeExpense - financingExpense - otherExpense;
-    }
 }
